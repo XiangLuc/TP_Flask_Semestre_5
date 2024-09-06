@@ -49,3 +49,28 @@ def create_task():
     task_db[task_id] = new_task
 
     return jsonify(f"La tache : {new_task} a été créer"), 201
+
+
+@task_bp.route('/<string: id>', methods=['PUT'])
+def update_task(id):
+
+    if id not in task_db:
+        return jsonify(f"l'identifiant de la tache : {id} n'existe pas"), 404
+
+    data = request.get_json()
+
+    #Pas eu le temps d'écrire les conditions de vérification
+
+    task = task_db[id]
+    update_task = {
+        "task_id": id,
+        "name": data['name'],
+        "description": data['description'],
+        "status": data['status'],
+        "created_at": task['created_at'],
+        "updated_at": datetime.now()
+    }
+
+    task_db[id] = update_task
+
+    return jsonify(update_task), 200
