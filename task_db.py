@@ -21,6 +21,6 @@ task_db est un index qui se présente sous la forme suivante :
 }
 '''
 
-task_db = Blueprint('task_db', __name__)
+task_bp = Blueprint('task_db', __name__)
 
 task_db = dict()
