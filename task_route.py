@@ -31,6 +31,12 @@ def create_task():
     task_id = str(uuid.uuid4())
     current_time = datetime.now()
 
+    if 'name' not in data or 'description' not in data or 'status' not in data:
+        return "erreur", 404
+
+    if data['status'] not in ['DONE', 'IN_PROGRESS', 'TODO']:
+        return "erreur sur le champs des status", 404
+
     new_task = {
         "task_id": task_id,
         "name": data['name'],
@@ -42,4 +48,4 @@ def create_task():
 
     task_db[task_id] = new_task
 
-    return jsonify(new_task), 201
+    return jsonify(f"La tache : {new_task} a été créer"), 201
