@@ -21,7 +21,7 @@ def get_task_by_id(id):
     task = task_db.get(id)
     if task:
         return jsonify(task_db.get(id))
-    return f"La tache d'id : {id}", 404
+    return jsonify(task), 404
 
 
 @task_bp.route('/', methods=['POST'])
@@ -32,10 +32,10 @@ def create_task():
     current_time = datetime.now()
 
     if 'name' not in data or 'description' not in data or 'status' not in data:
-        return "erreur", 404
+        return jsonify({"erreur": "il manque des champs pour créer la tache."}), 404
 
     if data['status'] not in ['DONE', 'IN_PROGRESS', 'TODO']:
-        return "erreur sur le champs des status", 404
+        return jsonify({"erreur": "le status saisi n'est pas conforme."}), 404
 
     new_task = {
         "task_id": task_id,
@@ -48,18 +48,17 @@ def create_task():
 
     task_db[task_id] = new_task
 
-    return jsonify(f"La tache : {new_task} a été créer"), 201
+    return jsonify({"true": f"La tache a été créer"}), 201
 
 
-@task_bp.route('/<string: id>', methods=['PUT'])
+@task_bp.route('/id', methods=['PUT'])
 def update_task(id):
-
     if id not in task_db:
-        return jsonify(f"l'identifiant de la tache : {id} n'existe pas"), 404
+        return jsonify({"erreur": f"l'identifiant de la tache : {id} n'existe pas"}), 404
 
     data = request.get_json()
 
-    #Pas eu le temps d'écrire les conditions de vérification
+    # Pas eu le temps d'écrire les conditions de vérification
 
     task = task_db[id]
     update_task = {
@@ -74,3 +73,11 @@ def update_task(id):
     task_db[id] = update_task
 
     return jsonify(update_task), 200
+
+
+@task_bp.route('/<string:id>', methods=['DELETE'])
+def delete_task(id):
+    if id not in task_db:
+        return jsonify({"erreur": f"l'identifiant de la tache : {id} n'existe pas."})
+    del task_db[id]
+    return jsonify({"true": f"La tache : {id} a été supprimer."})
