@@ -1,3 +1,5 @@
+from flask import Blueprint
+
 '''
 Une tâche contient les attributs suivants :
 task_id : uuid
@@ -18,4 +20,7 @@ task_db est un index qui se présente sous la forme suivante :
     }
 }
 '''
+
+task_db = Blueprint('task_db', __name__)
+
 task_db = dict()

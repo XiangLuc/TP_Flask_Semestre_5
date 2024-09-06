@@ -1,7 +1,12 @@
 from flask import Flask
+from flask_cors import CORS
+from task_db import task_bp
 
 app = Flask(__name__)
+cors = CORS(app)
 
+
+app.register_blueprint(task_bp, url_prefix='/joueurs')
 
 @app.route('/')
 def hello_world():  # put application's code here
