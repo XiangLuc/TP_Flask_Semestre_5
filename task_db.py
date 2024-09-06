@@ -1,5 +1,3 @@
-import uuid
-
 '''
 Une tâche contient les attributs suivants :
 task_id : uuid
@@ -22,4 +20,15 @@ task_db est un index qui se présente sous la forme suivante :
 '''
 
 
-task_db = dict()
+task_db = dict(
+    {
+        "1": {
+            "task_id" : "1",
+            "name": "Première tache",
+            "description": "Voici la première tache",
+            "status": "TODO",
+            "created_at": "6/11/2024",
+            "updated_at": "6/11/2024"
+        }
+    }
+)
