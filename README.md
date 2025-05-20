@@ -1,3 +1,3 @@
 # TP_Flask
 
-test webhook
+TP de Flask ou le but est de réalisé un CRUD basique.
